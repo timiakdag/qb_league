@@ -6,8 +6,7 @@
 
  // Your web app's Firebase configuration
  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
- function init_fb(){
-    const firebaseConfig = {
+const firebaseConfig = {
         apiKey: "AIzaSyC4ai92_qG_9CEaWXE5zlze6o3Bynnwe98",
         authDomain: "webqbleague.firebaseapp.com",
         projectId: "webqbleague",
@@ -16,9 +15,9 @@
         appId: "1:948299149641:web:db87c911f47a3ba870aa98",
         measurementId: "G-M1ZWXS80J3"
       };
-      const app = initializeApp(firebaseConfig);
+ const app = initializeApp(firebaseConfig);
 
- }
+
  // Initialize Firebase
  
  function create_user(email,pass) {

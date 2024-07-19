@@ -15,18 +15,28 @@
     <div class="nav" id="nav">
         <a href="../main_index.html">Home</a>
         <a href="./pages/selector.html" class="active">QB Selection</a>
+        <a href="./pages/login.html">Login/Register</a>
     </div>
+    <form class="search-form">
+      <input type="text" id="user_team" placeholder="Team Abbreviation">
+      <button type="button" id="search_qb">Enter</button>
+    </form>
     <div id="qb_main_div">
     </div>
     <div id="selection">
         <span id="selected">0/2</span>
-        <button type="submit">Enter Picks</button>
+        <button type="submit" id="footer_sub">Enter Picks</button>
     </div>
     <script type="module">
-        import {dis_qbs} from '../modules/qb_selector.js';
-        import {get_week_sch} from '../modules/nfl_api.js';
-        get_week_sch(1);
-        dis_qbs(document);
+        import {handle_form,dis_qbs} from '../modules/qb_selector.js';
+        document.addEventListener("DOMContentLoaded",() => {
+            let but = document.querySelector("#search_qb");
+            but.addEventListener("click",() => {
+                let u_team = document.getElementById('user_team').value;
+                handle_form(document,u_team);
+            })
+            //dis_qbs(document,'CHI');
+        })
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>

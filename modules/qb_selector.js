@@ -1,37 +1,64 @@
-import {get_all_qbs,get_week_sch} from './nfl_api.js';
+import {get_all_teams,get_qbs_from_team,get_week_sch} from './nfl_api.js';
 
-function dis_qbs(d) {
-    
-    let qbs = get_all_qbs();
-    let week = get_week_sch();
-    let full_list = add_matchdata(week,qbs);
-
-
-    d.addEventListener("DOMContentLoaded",() => {
-        let main = d.querySelector('#qb_main_div');
-
-        let selections = 0;
+function handle_form(d,u_i) {
+    let teams_promise = get_all_teams();
+    let elig_teams = [];
+    let teams = teams_promise.then((teams)=> {
+        let count = 0;
+        while (count < teams.length) {
+            let team = teams[count];
+            elig_teams.push(team.abbv);
+            count += 1;
+        };
         
-        full_list.forEach(function (i) {
-            main.innerHTML+= `<div class="row">
+        if(elig_teams.includes(u_i)) {
+            dis_qbs(d,u_i);
+        }else {
+            console.log('outside')
+        }
+    }).catch('ERR:');
+}
+
+function dis_qbs(d,team) {
+    
+    let qb_promise = get_qbs_from_team(team);
+    qb_promise.then((qbs)=> {
+        let week_promise = get_week_sch(1);
+        week_promise.then((week) => {
+            let full_list = add_matchdata(week,qbs,team);
+            console.log(full_list)
+            pop_screen(d,full_list)
+        })
+    }).catch("error");
+}
+
+function pop_screen(d,full_list) {
+    let main = d.querySelector('#qb_main_div');
+    let selections = 0;
+    let count = 0;
+    while (count < full_list.length) {
+        let i = full_list[count];
+        main.innerHTML+= `<div class="row">
                 <img class="col" src=${i.pic} alt=fail_to_load>
                 <div class="col">${i.name}</div>
                 <div class="col">${i.team}</div>
                 <div class="col">${i.oppt}</div>
                 <div class="col">32</div>
                 <div class="col"><input type='checkbox' name='select' id=${i.id}></div>
-            </div>`
-        })
+            </div>`;
+        count += 1;
+    }
 
-        const rows = d.querySelectorAll('.row');
-        rows.forEach((r) => {
-            r.addEventListener('click',(e) => {
-                const tar = e.target;
-                if (tar.id) {
-                    const chk = tar.checked;
-                    if (chk && selections < 2) {
-                        selections += 1;
-                        d.querySelector('#selected').innerHTML = `${selections}/2`
+    /*
+    const rows = d.querySelectorAll('.row');
+    rows.forEach((r) => {
+                r.addEventListener('click',(e) => {
+                    const tar = e.target;
+                    if (tar.id) {
+                        const chk = tar.checked;
+                        if (chk && selections < 2) {
+                            selections += 1;
+                            d.querySelector('#selected').innerHTML = `${selections}/2`
                     } 
 
                     if (!chk) {
@@ -45,8 +72,7 @@ function dis_qbs(d) {
                     }
                 } 
             })
-        })
-    });
+        })*/
 }
 
 function enable_checkboxes(rows) {
@@ -67,39 +93,26 @@ function disable_checkboxes(rows) {
     });
 }
 
-function add_matchdata(w_data,q_data) {
-    let comb = [];
+function add_matchdata(w_data,q_data,team) {
+    let comb = []
+    
+    for (const week of w_data) {
+        let json = JSON.parse(week);
 
-    w_data.forEach(function (w) {
-        const h = w.home;
-        const a = w.away;
-        const d = w.date;
-        q_data.forEach(function (q) {
-            let j = q;
-            j.date = d;
-            if(q.team===h) {
-                j.oppt = a;
-                comb.push(j);
-            } else if (q.team===a) {
-                j.oppt = `@${h}`;
-                comb.push(j);
+        if(json.home === team || json.away === team) {
+            for (const qb of q_data) {
+                let temp = JSON.parse(qb)
+                if(json.home === team) {
+                    temp.oppt = json.away
+                } 
+                if(json.away === team) {
+                    temp.oppt = `@${json.home}`
+                }
+                comb.push(temp)
             }
-        })
-    })
-    return comb;
-    /*
-    for (const x in w_data) {
-        console.log(w_data.x.home)
+        }
     }
-    for (const key in w_data) {
-        let sch = w_data[key]
-        console.log(sch);
-        console.log(JSON.parse(sch))
-        r[sch.away] = `{oppt:${sch.home}}`;
-        r[sch.home] = `{oppt:${sch.away}}`;
-        console.log(r)
-    }*/
-    return r;
+    return comb;
 }
 
-export {dis_qbs}
+export {handle_form,dis_qbs};

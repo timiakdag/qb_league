@@ -5,7 +5,7 @@
     flex-direction: row;
 }
 
-.nav > a {
+.nav a {
     display: block;
     color: black;
     text-align: center;

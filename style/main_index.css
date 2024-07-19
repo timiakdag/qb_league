@@ -1,19 +1,13 @@
 @import './nav.css';
 @import './gen_format.css';
 
-
-
 #big_flx {
     display: flex;
     flex-direction: column;
     width: 100%;
-}
-
-
-#card {
-    flex-grow: 1;
     background-color: #A1D6E2;
 }
+
 
 .collapsible {
     cursor: pointer;
@@ -36,6 +30,7 @@
     overflow: hidden;
     background-color: lightgray;
 }
+
 
 .col_active::after {
     content: '-';
