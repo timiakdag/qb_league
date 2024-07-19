@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NFL Project</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="./images/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="./images/favicon_io/site.webmanifest">
+    <link rel="stylesheet" type="text/css" href="./style/main_index.css" />
+  </head>
+  <body>
+    <div id="big_flx">
+      <div class="nav" id="nav">
+        <a href="main_index.html" class="active">Home</a>
+        <a href="./pages/selector.html">QB Selection</a>
+        <a href="./pages/login.html">Login/Register</a>
+      </div>
+  
+      <div id="card">
+          <h3>Welcome to the QB Fantasy Football League.</h3>
+          <p>This is a custom league where you pick two quarterbacks a week.  At the end of the week, the fantasy points for
+              the quarterbacks are talied (See Fantasy Scoring).  From weeks 1-16 you cannot reuse a QB. </p>
+          <p> Week 17 and 18 will essentially be playoffs. The bottom half of the standings are all eliminated and the top half are all still alive with the same composite score they had. 
+            For weeks 17 and 18 - whoever makes it through - will be able to pick any QBs they would like 1 time. So it is essentially a clean slate after week 16 as far as QBs available to be chosen.</p>
+      </div>
+      <button type="button" class="collapsible">Fantasy Scoring</button>
+      <div class="content"></div>
+      <div id="card">
+        <p>This league was started by a group of avid football fans.  Please join us in our fun competition!</p>
+      </div>
+      <!--TODO make this a sticky footer somehow-->
+      <p id="water">Made by Timur Akdag</p>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded",() => {
+        var col = document.querySelector('.collapsible');
+        var list = document.querySelector('.content');
+        col.addEventListener('click',(event) => {
+            list.innerHTML = `<ol><li>Passing/Rushing/Receiving TD = 6 points</li><li>25 passing yards = 1 point (1 passing yard = 1/25 of a point)</li>
+              <li>10 Rush/Receiving yards = 1 point (1 yard = 1/10 of a point)</li><li>Fumble lost/Interception = -2 points each</li><li>2 point conversion = 2 points</li>
+              <li>TD of 40+ yards = 2 points</li></ol>`;
+            if (list.style.display === "block") {
+              list.style.display = "none";
+              col.classList.remove('col_active');
+            }else {
+              list.style.display = 'block';
+              col.classList.add('col_active');
+            }
+        })
+      })
+    </script>
+  </body>
+</html>

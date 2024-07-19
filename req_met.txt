@@ -1,0 +1,6 @@
+0/10 - desendent selectors (space)
+0/10 - unique adjacent selectors (+)
+0/2 - class selectors (.)
+0/2 - id selectors
+0/5 - pseuo class (: -> special state of an element, user mouses over)
+0/5 - pseudo element (:: -> style first letter/line)

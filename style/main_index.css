@@ -1,0 +1,51 @@
+@import './nav.css';
+@import './gen_format.css';
+
+
+
+#big_flx {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+
+#card {
+    flex-grow: 1;
+    background-color: #A1D6E2;
+}
+
+.collapsible {
+    cursor: pointer;
+    background-color: #A1D6E2;
+}
+
+
+.collapsible:hover {
+    background-color: lightblue;
+}
+
+.collapsible::after {
+    content: '+';
+    float: right;
+    font-size: 15px;
+}
+
+.content {
+    display: none;
+    overflow: hidden;
+    background-color: lightgray;
+}
+
+.col_active::after {
+    content: '-';
+}
+
+#water
+{
+    opacity:0.5;
+    color: #d3d3d3;
+    position: fixed;
+    bottom: 0;
+    align-items: center;
+}

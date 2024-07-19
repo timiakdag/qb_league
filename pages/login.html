@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NFL Project</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../images/favicon_io/site.webmanifest">
+    <link rel="stylesheet" type="text/css" href="../style/gen_format.css" />
+  </head>
+  <body>
+    <div id="big_flx">
+        <form>
+            <input type="email" id="email">
+            <input type="password" id="pass">
+            <button type="submit">Register</button>
+        </form>
+    </div>
+  </body>
+  <script src="https://www.gstatic.com/firebasejs/7.22.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.22.1/firebase-auth.js"></script>
+  <script type="module">
+    import {init_fb,valid_input,create_user} from '../modules/firebase.js';
+    document.addEventListener("DOMContentLoaded",() => {
+        const b = document.querySelector('button');
+        b.addEventListener("click",() => {
+            const e = document.querySelector('#email');
+            const p = document.querySelector('#pass')
+            console.log('here')
+            if (valid_input(e,p)) {
+                console.log('createUser')
+                create_user(e,p);
+            }
+        })
+    }) 
+  </script>
+</html>
