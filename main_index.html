@@ -13,7 +13,7 @@
   <body>
     <div id="big_flx">
       <div class="nav" id="nav">
-        <a href="main_index.html" class="active">Home</a>
+        <a href="main_index.html" class="nav_active">Home</a>
         <a href="./pages/selector.html">QB Selection</a>
         <a href="./pages/login.html">Login/Register</a>
       </div>
@@ -27,11 +27,14 @@
       </div>
       <button type="button" class="collapsible">Fantasy Scoring</button>
       <div class="content"></div>
-      <div id="card">
+      <div id="logo">
         <p>This league was started by a group of avid football fans.  Please join us in our fun competition!</p>
+        <img src="./images/QB_League.png" alt="missing_logo">
       </div>
       <p id="water">Made by Timur Akdag</p>
     </div>
+    <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-firestore.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded",() => {
         var col = document.querySelector('.collapsible');

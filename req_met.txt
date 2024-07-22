@@ -1,15 +1,15 @@
-7/10 - desendent selectors (space)
-1/10 - unique adjacent selectors (+)
-3/2 - class selectors (.)
-2/2 - id selectors
-2/5 - pseuo class (: -> special state of an element, user mouses over) used: hover
-1/5 - pseudo element (:: -> style first letter/line) used: after 
+0/10 - desendent selectors (space)
+0/10 - unique adjacent selectors (+)
+0/2 - class selectors (.)
+0/2 - id selectors
+0/5 - pseuo class (: -> special state of an element, user mouses over) used: hover
+0/5 - pseudo element (:: -> style first letter/line) used: after 
 
 ------------------
-2/20 - event handlers 
+0/20 - event handlers 
 
 0/1 - class 
 
 function expression, declaration , anonomyous, arrow
 
-3/4 - fetch calls
+0/4 - fetch calls

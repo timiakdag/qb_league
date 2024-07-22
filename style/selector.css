@@ -1,10 +1,67 @@
 @import './nav.css';
 @import './gen_format.css';
+div + form {
+    display: flex;
+    margin-left: 2px;
+}
 
-div .row {
+button + span {
+    padding: 10px;
+}
+
+#user_team {
+    height: 38.4px;
+    width: auto;
+}
+
+.info {
+    padding: 10px;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Tooltip text */
+  .tooltip .tooltiptext {
+    visibility: hidden;
+  width: 120px;
+  background-color: lightgray;
+  color: black;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 105%;
+  }
+  
+  /* Show the tooltip text when you mouse over the tooltip container */
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
+
+.hidden_sel {
+    display: none;
+}
+
+.show_inline_sel {
+    display: inline;
+}
+
+.show_flex_sel {
+    display:flex;
+}
+
+div .sel_row {
     display: flex;
     border: .5px solid black;
-    margin: 2px;
+    margin-left: 2px;
+    margin-right: 2px;
 }
 
 div img.col {
@@ -14,6 +71,7 @@ div img.col {
 div .col {
     border: .5px solid black;
     background-color: white;
+    width: 50%;
 }
 
 #selection {
@@ -32,3 +90,21 @@ div .col {
 #selection button {
     align-self: stretch;
 }
+
+.load_window {
+    justify-content: center;
+    display: none;
+}
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

@@ -8,6 +8,30 @@
     background-color: #A1D6E2;
 }
 
+h3 + p {
+    font-size: large;
+    text-decoration: underline;
+}
+
+#card {
+    display: flex;
+    border: .5px solid black;
+    flex-direction: column;
+}
+
+#logo {
+    display: flex;
+    flex-direction: row;
+}
+
+p + img {
+    width: 15%;
+    height: auto;
+    border-radius: 50%;
+    padding: 10px;
+    margin: 10px;
+    mix-blend-mode: multiply;
+}
 
 .collapsible {
     cursor: pointer;

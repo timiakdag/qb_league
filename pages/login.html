@@ -8,31 +8,45 @@
     <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon_io/favicon-16x16.png">
     <link rel="manifest" href="../images/favicon_io/site.webmanifest">
-    <link rel="stylesheet" type="text/css" href="../style/gen_format.css" />
+    <link rel="stylesheet" type="text/css" href="../style/login.css" />
   </head>
   <body>
-    <div id="big_flx">
+    <div id="login_flx">
         <form>
             <input type="email" id="email">
+            <label for="email">E-mail</label>
             <input type="password" id="pass">
-            <button type="submit">Register</button>
+            <label for="pass">Password</label>
+            <input type="text" id="dis_name">
+            <label for="dis_name">Display Name</label>
+            <span>
+              <button type="button" id="login">Login</button>
+              <button type="button" id="register">Register</button>
+            </span>
         </form>
     </div>
   </body>
-  <script src="https://www.gstatic.com/firebasejs/7.22.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.22.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-auth.js"></script>
   <script type="module">
-    import {init_fb,valid_input,create_user} from '../modules/firebase.js';
+    import {auth} from '../modules/firebase.js';
     document.addEventListener("DOMContentLoaded",() => {
-        const b = document.querySelector('button');
-        b.addEventListener("click",() => {
+        const l = document.querySelector('#login');
+        const r = document.querySelector('#register');
+        const a = new auth();
+        l.addEventListener("click",() => {
             const e = document.querySelector('#email');
-            const p = document.querySelector('#pass')
-            console.log('here')
-            if (valid_input(e,p)) {
-                console.log('createUser')
-                create_user(e,p);
-            }
+            const p = document.querySelector('#pass');
+            
+            
+            a.sign_in(e,p);
+        });
+        r.addEventListener("click",() => {
+            const e = document.querySelector('#email');
+            const p = document.querySelector('#pass');
+            
+            let a = auth();
+            a.create_user(e,p);
         })
     }) 
   </script>

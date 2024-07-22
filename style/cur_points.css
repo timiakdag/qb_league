@@ -1,0 +1,9 @@
+.row_box {
+    display: flex;
+    flex-direction: row;
+}
+
+p {
+    border: 5px;
+    border-color: black;
+}

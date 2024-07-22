@@ -19,7 +19,7 @@
     background-color: lightblue;
 }
 
-.nav a.active {
+.nav a.nav_active {
     background-color: #d3d3d3;
     color: white;
 }
