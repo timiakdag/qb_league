@@ -13,41 +13,42 @@
   <body>
     <div id="login_flx">
         <form>
-            <input type="email" id="email">
-            <label for="email">E-mail</label>
-            <input type="password" id="pass">
+            <input type="email" id="email" required>
+            <label for="email" class="login icon">E-mail</label>
+            <input type="password" id="pass" required>
             <label for="pass">Password</label>
-            <input type="text" id="dis_name">
-            <label for="dis_name">Display Name</label>
             <span>
               <button type="button" id="login">Login</button>
               <button type="button" id="register">Register</button>
             </span>
         </form>
     </div>
+    <p>Login information is kept by Google firebase see
+      <a href="https://firebase.google.com/">link</a>
+      for more.
+    </p>
   </body>
-  <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-auth.js"></script>
+  <script src="https://kit.fontawesome.com/ae57a18757.js" crossorigin="anonymous"></script>
   <script type="module">
-    import {auth} from '../modules/firebase.js';
+    import {auth} from '../modules/auth.js';
     document.addEventListener("DOMContentLoaded",() => {
         const l = document.querySelector('#login');
         const r = document.querySelector('#register');
         const a = new auth();
         l.addEventListener("click",() => {
-            const e = document.querySelector('#email');
-            const p = document.querySelector('#pass');
-            
-            
-            a.sign_in(e,p);
+            history.back();
         });
         r.addEventListener("click",() => {
-            const e = document.querySelector('#email');
-            const p = document.querySelector('#pass');
-            
-            let a = auth();
-            a.create_user(e,p);
+            history.back();
         })
     }) 
+
+    function is_cred_valid(cred) {
+      if (cred.includes('ERR')) {
+        return false;
+      }else {
+        return true;
+      }
+    }
   </script>
 </html>

@@ -97,32 +97,22 @@ async function get_week_sch(week) {
     };*/
 }
 
-async function get_proj_points(week,playerID){
-    let url = `https://tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com/getNFLProjections?week=${week}&twoPointConversions=2&passYards=.04&passTD=6&passInterceptions=-2&rushYards=.1&rushTD=6&fumbles=-2&receivingYards=.1&receivingTD=6&rapidapi-key=120902996bmsh0eb2a2d0c126911p14476ajsnda0139ed4fa6`;
+async function get_player_data(playerID){
+    let url = `https://tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com/getNFLPlayerInfo?playerID=${playerID}&rapidapi-key=120902996bmsh0eb2a2d0c126911p14476ajsnda0139ed4fa6`;
  
     const r = await fetch(url);
         if (!r.ok) {
-            return 'ERR: get projected points failed';
+            return 'ERR: failed to get player data';
         }
         const json = await r.json();
         if (json.statusCode===200) {
-            let proj = json.body.playerProjections;
-            qb = proj.filter(function(item) {
-                return Object.keys(item)===playerID;
-            })
-
-            return qb.fantasyPoints
-
-            /*
-            for (const e of proj) {
-                let key = Object.keys(e);
-                if (key===playerID) {
-                    return e.key.fantasyPoints;
-                }
-            }*/
+            console.log(json)
+            let espn = json.body.espnLink;
+            console.log(espn)
+            return espn;
         } else {
-            return 'ERR: get points crashed'
+            return 'ERR: get player data crashed'
         }
 }
 
-export {get_all_teams,get_qbs_from_team,get_week_sch,get_proj_points};
+export {get_all_teams,get_qbs_from_team,get_week_sch,get_player_data};

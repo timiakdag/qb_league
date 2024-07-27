@@ -1,4 +1,4 @@
-import {get_all_teams,get_qbs_from_team,get_week_sch} from './nfl_api.js';
+import {get_all_teams,get_qbs_from_team,get_week_sch,get_player_data} from './nfl_api.js';
 
 function handle_form(d,u_i) {
     let loader = d.querySelector('.load_window');
@@ -18,7 +18,6 @@ function handle_form(d,u_i) {
             count += 1;
         };
         
-        console.log(u_i);
         if(elig_teams.includes(u_i)) {
             error.classList.remove('.show_inline_sel');
             error.classList.add('hidden_sel');
@@ -35,7 +34,9 @@ function handle_form(d,u_i) {
             loader.classList.remove('show_flex_sel');
             loader.classList.add('hidden_sel');
         }
-    }).catch((err) => {alert(err)});
+    }).catch((err) => {
+        err_msg(err)
+    });
 }
 
 function dis_qbs(d,team) {
@@ -47,49 +48,62 @@ function dis_qbs(d,team) {
             let full_list = add_matchdata(week,qbs,team);
             pop_screen(d,full_list);
         })
-    }).catch("error");
+    }).catch((err) => {
+        err_msg(err)
+    });
 }
 
 function pop_screen(d,full_list) {
     let main = d.querySelector('#qb_main_div');
-    let selections = 0;
     let count = 0;
     main.innerHTML="";
     while (count < full_list.length) {
         let i = full_list[count];
+        let c = i.name.split(" ").join("");
         main.innerHTML+= `<div class="sel_row">
                 <img class="col" src=${i.pic} alt=fail_to_load>
                 <div class="col">${i.name}</div>
                 <div class="col">${i.team}</div>
                 <div class="col">${i.oppt}</div>
-                <div class="col"><input type='checkbox' name='select' id=${i.id}></div>
+                <div class="col"><input type='checkbox' name='select' class=${c} id=${i.id}></div>
             </div>`;
         count += 1;
     }
 
     const rows = d.querySelectorAll('.sel_row');
+    const mag_glass = d.querySelector('.mag_tip_text');
+    const imgs = d.querySelectorAll('img');
     rows.forEach((r) => {
         r.addEventListener('click',(e) => {
             const tar = e.target;
             if (tar.id) {
                 const chk = tar.checked;
-                if (chk && selections < 2) {
-                    selections += 1;
-                    d.querySelector('#selected').innerHTML = `${selections}/2`
+                let sel = `{"qb":"${tar.classList[0]}","id":"${tar.id}"}`;
+                let mag = d.querySelector('.mag');
+                
+                if (chk) {
+                    disable_checkboxes(rows);
+                    mag.classList.remove('hidden_sel');
+                    let espn_promise = get_player_data(tar.id);
+                    espn_promise.then((espn_link) => {
+                        mag_glass.innerHTML = `<a href=${espn_link}>See ESPN bio</a>`;
+                    }).catch((err) => {
+                        err_msg(err)
+                    }) 
                 } 
 
                 if (!chk) {
-                    selections -= 1;
-                    d.querySelector('#selected').innerHTML = `${selections}/2`
                     enable_checkboxes(rows);
-                }
-
-                if(selections==2) {
-                    disable_checkboxes(rows);
+                    mag.classList.add('hidden_sel');
+                    mag_glass.innerHTML = "";
                 }
             } 
-        })
-    })
+        });
+    });
+}
+
+function err_msg(err){
+    alert(err)
 }
 
 function enable_checkboxes(rows) {
@@ -112,13 +126,11 @@ function disable_checkboxes(rows) {
 
 function add_matchdata(w_data,q_data,team) {
     let comb = []
-    
     for (const week of w_data) {
         let json = JSON.parse(week);
 
         if(json.home === team || json.away === team) {
             for (const qb of q_data) {
-                console.log(qb)
                 let temp = JSON.parse(qb)
                 if(json.home === team) {
                     temp.oppt = json.away

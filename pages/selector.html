@@ -14,7 +14,7 @@
     <div class="nav" id="nav">
         <a href="../main_index.html">Home</a>
         <a href="./pages/selector.html" class="nav_active">QB Selection</a>
-        <a href="./pages/login.html">Login/Register</a>
+        <a href="./login.html">Login/Register</a>
     </div>
     <form class="search-form">
       <input type="text" list="teamList" id="user_team" placeholder="Team Abbreviation">
@@ -34,8 +34,10 @@
     <div id="qb_main_div">
     </div>
     <div id="selection">
-        <span id="selected">0/2</span>
-        <button type="submit" id="footer_sub">Enter Picks</button>
+        <span class="mag mag_tooltip">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span class="mag_tip_text"></span>
+        </span>
     </div>
     <script type="module">
         import {handle_form,dis_qbs} from '../modules/qb_selector.js';
@@ -43,6 +45,7 @@
         document.addEventListener("DOMContentLoaded",() => {
             const but = document.querySelector('#search_qb');
             const info_w = document.querySelector('.tooltiptext');
+            const u_t = document.querySelector('#user_team');
             let teams_promise = get_all_teams();
             let elig_teams = [];
             teams_promise.then((teams)=> {
@@ -57,9 +60,11 @@
                 }
                 count += 1;
               };
+          }).catch((err) => {
+            alert(err);
           });
             but.addEventListener("click",() => {
-              handle_form(document,document.querySelector('#user_team').value)
+              handle_form(document,document.querySelector('#user_team').value);
             });
         });
     </script>

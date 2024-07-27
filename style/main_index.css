@@ -8,9 +8,13 @@
     background-color: #A1D6E2;
 }
 
+div + button::first-line {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
 h3 + p {
     font-size: large;
-    text-decoration: underline;
 }
 
 #card {
@@ -19,7 +23,7 @@ h3 + p {
     flex-direction: column;
 }
 
-#logo {
+div + #logo {
     display: flex;
     flex-direction: row;
 }
@@ -49,6 +53,12 @@ p + img {
     font-size: 15px;
 }
 
+.collapsible::before {
+    content: '+';
+    float: left;
+    font-size: 15px;
+}
+
 .content {
     display: none;
     overflow: hidden;
@@ -60,7 +70,11 @@ p + img {
     content: '-';
 }
 
-#water
+.col_active::before {
+    content: '-';
+}
+
+div + p
 {
     opacity:0.5;
     color: #d3d3d3;

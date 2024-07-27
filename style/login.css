@@ -1,10 +1,48 @@
+@import './gen_format.css';
+
 input + label {
     font:bold
 }
 
-#login_flx {
+div form {
     display: flex;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
+    border: .5px solid black;
+    margin: 5px;
+    padding: 5px;
 }
+
+input:required{
+    border-color: lightsalmon;
+}
+
+label + span {
+    display: flex;
+    justify-content: center;
+}
+
+span button {
+    padding: 5px;
+    margin: 5px;
+}
+
+form input {
+    margin: 5px;
+}
+
+button + button {
+    background-color: #A1D6E2;
+}
+
+button:hover {
+    background-color: lightgray;
+}
+
+a:hover {
+    background-color: lightgrey;
+}
+
+.hide {
+    display: none;
+}
+
