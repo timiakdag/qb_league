@@ -3,6 +3,11 @@
 div + form {
     display: flex;
     margin-left: 2px;
+    background-color: #A1D6E2;
+}
+
+select + button {
+    margin-left: 5px;
 }
 
 button + span {
@@ -14,13 +19,14 @@ button + span {
     width: auto;
 }
 
-.mag,.info {
+.mag,.info,.error_msg {
     padding: 10px;
 }
 
-.mag_tooltip,.tooltip {
+.mag_tooltip,.tooltip,.error_msg {
     position: relative;
     display: inline-block;
+    align-self: center;
   }
 .mag_tooltip .mag_tip_text {
     visibility: hidden;
@@ -29,7 +35,7 @@ button + span {
     color: black;
     text-align: center;
     border-radius: 6px;
-    padding: 5px 0;
+    padding: 5px;
     
     /* Position the tooltip */
     position: absolute;
@@ -111,7 +117,6 @@ div .col {
 
 .load_window {
     justify-content: center;
-    display: none;
 }
 .loader {
     border: 16px solid #f3f3f3; /* Light grey */
@@ -125,4 +130,9 @@ div .col {
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+  }
+
+  span + label {
+    padding: 5px;
+    align-self: center;
   }

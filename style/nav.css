@@ -5,7 +5,7 @@
     flex-direction: row;
 }
 
-.nav a {
+.nav a,button {
     display: block;
     color: black;
     text-align: center;
@@ -13,13 +13,22 @@
     text-decoration: none;
     border: 1px outset;
     border-radius: 3px;
+    background-color: #A1D6E2;
 }
 
-.nav a:hover {
+.nav a:hover,button:hover {
     background-color: lightblue;
 }
 
 .nav a.nav_active {
     background-color: #d3d3d3;
     color: white;
+}
+
+.nav button {
+    border: 1px solid black;
+}
+
+.hide {
+    display: none !important;
 }

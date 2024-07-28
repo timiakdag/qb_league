@@ -4,10 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>NFL Project</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="./images/favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon_io/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon_io/favicon-16x16.png">
-    <link rel="manifest" href="./images/favicon_io/site.webmanifest">
     <link rel="stylesheet" type="text/css" href="./style/main_index.css" />
   </head>
   <body>
@@ -15,7 +12,8 @@
       <div class="nav" id="nav">
         <a href="main_index.html" class="nav_active">Home</a>
         <a href="./pages/selector.html">QB Selection</a>
-        <a href="./pages/login.html">Login/Register</a>
+        <a href="./pages/login.html" id="reg">Login/Register</a>
+        <button type="button" class="hide" id="log_out">Log out</button>
       </div>
   
       <div id="card">
@@ -37,6 +35,7 @@
       document.addEventListener("DOMContentLoaded",() => {
         var col = document.querySelector('.collapsible');
         var list = document.querySelector('.content');
+        var log_out_but = document.querySelector('#log_out');
         col.addEventListener('click',(event) => {
             list.innerHTML = `<ol><li>Passing/Rushing/Receiving TD = 6 points</li><li>25 passing yards = 1 point (1 passing yard = 1/25 of a point)</li>
               <li>10 Rush/Receiving yards = 1 point (1 yard = 1/10 of a point)</li><li>Fumble lost/Interception = -2 points each</li><li>2 point conversion = 2 points</li>
@@ -48,12 +47,31 @@
               list.style.display = 'block';
               col.classList.add('col_active');
             }
+        });
+        log_out_but.addEventListener('click',() => {
+          localStorage.clear();
+          log_out_but.classList.add('hide');
+          let reg = document.querySelector('#reg');
+          reg.classList.remove('hide')
         })
       });
       window.addEventListener("offline", function () {
         let b = document.querySelector("body");
         b.innerHTML = `<p>We appologize, but this website is not available offline.</p>`
-      })
+      });
+
+      window.addEventListener("load",() =>{
+        const user = localStorage.getItem('user');
+        if (user) {
+          let log_out = document.querySelector('#log_out');
+          let reg = document.querySelector('#reg');
+          log_out.classList.remove('hide');
+          reg.classList.add('hide')
+        }
+      });
+      
+
+      
     </script>
   </body>
 </html>

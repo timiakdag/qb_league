@@ -82,3 +82,7 @@ div + p
     bottom: 0;
     align-items: center;
 }
+
+.hide {
+    display: none;
+}

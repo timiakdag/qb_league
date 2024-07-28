@@ -4,24 +4,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>NFL Project</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="../images/favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon_io/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon_io/favicon-16x16.png">
-    <link rel="manifest" href="../images/favicon_io/site.webmanifest">
     <link rel="stylesheet" type="text/css" href="../style/login.css" />
   </head>
   <body>
     <div id="login_flx">
-        <form>
+        <form id="form" action="../main_index.html">
             <input type="email" id="email" required>
             <label for="email" class="login icon">E-mail</label>
             <input type="password" id="pass" required>
             <label for="pass">Password</label>
             <span>
-              <button type="button" id="login">Login</button>
-              <button type="button" id="register">Register</button>
+              <button type="submit" id="login">Login</button>
+              <button type="submit" id="register">Register</button>
             </span>
         </form>
+    </div>
+    <div id="success_msg">
     </div>
     <p>Login information is kept by Google firebase see
       <a href="https://firebase.google.com/">link</a>
@@ -32,23 +31,12 @@
   <script type="module">
     import {auth} from '../modules/auth.js';
     document.addEventListener("DOMContentLoaded",() => {
-        const l = document.querySelector('#login');
-        const r = document.querySelector('#register');
-        const a = new auth();
-        l.addEventListener("click",() => {
-            history.back();
-        });
-        r.addEventListener("click",() => {
-            history.back();
+        const f = document.querySelector('#form');
+        f.addEventListener("submit",e => {
+          const u = document.querySelector('#email').value;
+          const p = document.querySelector('#pass').value;
+          localStorage.setItem('user',u);
         })
-    }) 
-
-    function is_cred_valid(cred) {
-      if (cred.includes('ERR')) {
-        return false;
-      }else {
-        return true;
-      }
-    }
+    });
   </script>
 </html>

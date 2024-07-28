@@ -5,20 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Select a QB</title>
     <link rel="stylesheet" type="text/css" href="../style/selector.css" />
-    <link rel="apple-touch-icon" sizes="180x180" href="../images/favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon_io/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon_io/favicon-16x16.png">
-    <link rel="manifest" href="../images/favicon_io/site.webmanifest">
   </head>
   <body>
     <div class="nav" id="nav">
         <a href="../main_index.html">Home</a>
         <a href="./pages/selector.html" class="nav_active">QB Selection</a>
-        <a href="./login.html">Login/Register</a>
+        <a href="./login.html" id="reg">Login/Register</a>
+        <button type="button" class="hide" id="log_out">Log out</button>
     </div>
     <form class="search-form">
       <input type="text" list="teamList" id="user_team" placeholder="Team Abbreviation">
-      <button type="button" class="search_qb" id="search_qb">Enter</button>
       <span class="error_msg hidden_sel">
         <i class="fa-solid fa-triangle-exclamation"></i>
         <span>Invalid!</span>
@@ -27,14 +24,19 @@
         <i class="fa-solid fa-circle-info"></i>
         <span class="tooltiptext">Valid teams: </span>
       </span>
+      <label for="week">Week:</label>
+      <select name="week" id="week">
+        
+      </select>
+      <button type="button" class="search_qb" id="search_qb" disabled>Enter</button>
     </form>
-    <div class="load_window hidden_sel">
+    <div class="load_window show_flex_sel">
       <div class="loader"></div>
     </div>
     <div id="qb_main_div">
     </div>
     <div id="selection">
-        <span class="mag mag_tooltip">
+        <span class="mag mag_tooltip hidden_sel">
           <i class="fa-solid fa-magnifying-glass"></i>
           <span class="mag_tip_text"></span>
         </span>
@@ -44,8 +46,12 @@
         import {get_all_teams} from '../modules/nfl_api.js';
         document.addEventListener("DOMContentLoaded",() => {
             const but = document.querySelector('#search_qb');
+            var log_out_but = document.querySelector('#log_out');
             const info_w = document.querySelector('.tooltiptext');
             const u_t = document.querySelector('#user_team');
+            let loader = document.querySelector('.load_window');
+            let select = document.querySelector('#week');
+            fill_dropdown(select);
             let teams_promise = get_all_teams();
             let elig_teams = [];
             teams_promise.then((teams)=> {
@@ -60,13 +66,47 @@
                 }
                 count += 1;
               };
-          }).catch((err) => {
-            alert(err);
+              but.removeAttribute('disabled');
+              loader.classList.remove('show_flex_sel');
+              loader.classList.add('hidden_sel');
+          }).catch((e) => {
+            loader.classList.remove('show_flex_sel');
+            loader.classList.add('hidden_sel');
+            alert(e);
           });
-            but.addEventListener("click",() => {
-              handle_form(document,document.querySelector('#user_team').value);
-            });
+            
+          but.addEventListener("click",() => {
+            loader.classList.remove('hidden_sel');
+            loader.classList.add('show_flex_sel');
+            handle_form(document,document.querySelector('#user_team').value,document.querySelector('#week').value,elig_teams);
+          });
+          log_out_but.addEventListener('click',() => {
+            localStorage.clear();
+            log_out_but.classList.add('hide');
+            let reg = document.querySelector('#reg');
+            reg.classList.remove('hide')
+          });
         });
+
+        function fill_dropdown(drop_cont){
+            let count = 1;
+            while (count<19) {
+              const w = `<option value="${count}">${count}</option>`
+              drop_cont.innerHTML += w;
+              count +=1;
+            }
+        }
+    </script>
+    <script>
+      window.addEventListener("load",() =>{
+        const user = localStorage.getItem('user');
+        if (user) {
+          let log_out = document.querySelector('#log_out');
+          let reg = document.querySelector('#reg');
+          log_out.classList.remove('hide');
+          reg.classList.add('hide')
+        }
+      });
     </script>
     <script src="https://kit.fontawesome.com/ae57a18757.js" crossorigin="anonymous"></script>
   </body>
