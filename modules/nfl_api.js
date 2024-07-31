@@ -35,7 +35,7 @@ async function get_qbs_from_team(team) {
             let qbs = roster.filter(function(item){
                 return item.pos === 'QB'});
             for (const e of qbs) {
-                const [name,team,pic,inj,pos,id] = [e.espnName,e.team,e.espnHeadshot,e.injury,e.pos,e.playerID];
+                const [name,team,pic,pos,id] = [e.espnName,e.team,e.espnHeadshot,e.pos,e.playerID];
                 if (pos==='QB') {
                     list_qbs.push(`{"team":"${team}","pic":"${pic}","name":"${name}","id":"${id}"}`);
                 }   
@@ -61,7 +61,7 @@ async function get_week_sch(week) {
         
         if (data.statusCode === 200) {
             data.body.forEach(e => {
-                const [date,away,home,neutral_site,id] = [e.gameDate,e.away,e.home,e.neutralSite,e.gameID];
+                const [date,away,home,neutral_site] = [e.gameDate,e.away,e.home,e.neutralSite];
                 w.push(`{"date":"${date}","away":"${away}","home":"${home}","neutral":"${neutral_site}"}`);
             });
             return w;
@@ -83,9 +83,7 @@ async function get_player_data(playerID){
         }
         const json = await r.json();
         if (json.statusCode===200) {
-            console.log(json)
             let espn = json.body.espnLink;
-            console.log(espn)
             return espn;
         } else {
             return 'ERR: get player data crashed'

@@ -32,6 +32,12 @@
       <p id="water">Made by Timur Akdag</p>
     </div>
     <script>
+      const hide_ele = function(item) {
+        item.classList.add('hide')
+      }
+      const show_ele = function(item) {
+        item.classList.remove('hide')
+      }
       document.addEventListener("DOMContentLoaded",() => {
         var col = document.querySelector('.collapsible');
         var list = document.querySelector('.content');
@@ -50,9 +56,9 @@
         });
         log_out_but.addEventListener('click',() => {
           localStorage.clear();
-          log_out_but.classList.add('hide');
+          hide_ele(log_out_but);
           let reg = document.querySelector('#reg');
-          reg.classList.remove('hide')
+          show_ele(reg);
         })
       });
       window.addEventListener("offline", function () {
@@ -60,18 +66,15 @@
         b.innerHTML = `<p>We appologize, but this website is not available offline.</p>`
       });
 
-      window.addEventListener("load",() =>{
+      window.addEventListener("load", function () {
         const user = localStorage.getItem('user');
         if (user) {
           let log_out = document.querySelector('#log_out');
           let reg = document.querySelector('#reg');
-          log_out.classList.remove('hide');
-          reg.classList.add('hide')
+          show_ele(log_out);
+          hide_ele(reg);
         }
       });
-      
-
-      
     </script>
   </body>
 </html>

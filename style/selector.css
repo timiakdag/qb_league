@@ -1,6 +1,6 @@
 @import './nav.css';
 @import './gen_format.css';
-div + form {
+.nav + form {
     display: flex;
     margin-left: 2px;
     background-color: #A1D6E2;
@@ -19,6 +19,9 @@ button + span {
     width: auto;
 }
 
+#search_qb {
+    border: 1px solid black;
+}
 .mag,.info,.error_msg {
     padding: 10px;
 }

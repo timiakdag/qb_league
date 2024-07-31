@@ -1,4 +1,19 @@
 import {get_all_teams,get_qbs_from_team,get_week_sch,get_player_data} from './nfl_api.js';
+const add_inline = function(item){
+    item.classList.add('show_inline_sel');
+}
+const rem_inline = function(item){
+    item.classList.remove('show_inline_sel');
+}
+const add_hidden = function(item){
+    item.classList.add('hidden_sel');
+}
+const rem_hidden = function(item){
+    item.classList.remove('hidden_sel');
+}
+const rem_flex = function(item){
+    item.classList.remove('show_flex_sel')
+}
 
 function handle_form(d,u_i,week,elig_teams) {
     let loader = d.querySelector('.load_window');
@@ -6,16 +21,16 @@ function handle_form(d,u_i,week,elig_teams) {
     let info = d.querySelector('.info');
     
     if(elig_teams.includes(u_i)) {
-        error.classList.remove('.show_inline_sel');
-        error.classList.add('hidden_sel');
-        info.classList.remove('hidden_sel');
+        rem_inline(error);
+        add_hidden(error);
+        rem_hidden(info)
         dis_qbs(d,u_i,week,loader);
-        
-        
     }else {
-        info.classList.add('hidden_sel');
-        error.classList.remove('hidden_sel');
-        error.classList.add('.show_inline_sel');
+        add_hidden(info);
+        rem_hidden(error);
+        add_inline(error);
+        rem_flex(loader);
+        add_hidden(loader);
     }
 }
 
@@ -27,12 +42,12 @@ function dis_qbs(d,team,week,loader) {
         week_promise.then((w) => {
             let full_list = add_matchdata(w,qbs,team);
             pop_screen(d,full_list,week);
-            loader.classList.remove('show_flex_sel');
-            loader.classList.add('hidden_sel');
+            rem_flex(loader);
+            add_hidden(loader);
         })
     }).catch((err) => {
-        loader.classList.remove('show_flex_sel');
-        loader.classList.add('hidden_sel');
+        rem_flex(loader);
+        add_hidden(loader);
         err_msg(err)
     });
 }
@@ -40,7 +55,6 @@ function dis_qbs(d,team,week,loader) {
 function pop_screen(d,full_list,week) {
     let main = d.querySelector('#qb_main_div');
     let count = 0;
-    main.innerHTML="";
     if (full_list.length>0){
         while (count < full_list.length) {
             let i = full_list[count];
@@ -57,7 +71,6 @@ function pop_screen(d,full_list,week) {
     
         const rows = d.querySelectorAll('.sel_row');
         const mag_glass = d.querySelector('.mag_tip_text');
-        const imgs = d.querySelectorAll('img');
         rows.forEach((r) => {
             r.addEventListener('click',(e) => {
                 const tar = e.target;
@@ -67,7 +80,7 @@ function pop_screen(d,full_list,week) {
                     
                     if (chk) {
                         disable_checkboxes(rows);
-                        mag.classList.remove('hidden_sel');
+                        rem_hidden(mag);
                         let espn_promise = get_player_data(tar.id);
                         espn_promise.then((espn_link) => {
                             mag_glass.innerHTML = `<a href=${espn_link}>See ESPN bio</a>`;
@@ -78,7 +91,7 @@ function pop_screen(d,full_list,week) {
     
                     if (!chk) {
                         enable_checkboxes(rows);
-                        mag.classList.add('hidden_sel');
+                        add_hidden(mag);
                         mag_glass.innerHTML = "";
                     }
                 } 
@@ -124,6 +137,9 @@ function add_matchdata(w_data,q_data,team) {
                 } 
                 if(json.away === team) {
                     temp.oppt = `@${json.home}`
+                }
+                if(json.neutral==='True'){
+                    temp.oppt += ' (neutral site)'
                 }
                 comb.push(temp)
             }

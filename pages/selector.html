@@ -51,6 +51,7 @@
             const u_t = document.querySelector('#user_team');
             let loader = document.querySelector('.load_window');
             let select = document.querySelector('#week');
+
             fill_dropdown(select);
             let teams_promise = get_all_teams();
             let elig_teams = [];
@@ -76,6 +77,8 @@
           });
             
           but.addEventListener("click",() => {
+            let main = document.querySelector('#qb_main_div');
+            main.innerHTML="";
             loader.classList.remove('hidden_sel');
             loader.classList.add('show_flex_sel');
             handle_form(document,document.querySelector('#user_team').value,document.querySelector('#week').value,elig_teams);
@@ -90,7 +93,7 @@
 
         function fill_dropdown(drop_cont){
             let count = 1;
-            while (count<19) {
+            while (count<18) {
               const w = `<option value="${count}">${count}</option>`
               drop_cont.innerHTML += w;
               count +=1;
